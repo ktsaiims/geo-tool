@@ -6,6 +6,19 @@ from dataclasses import dataclass
 logger = logging.getLogger(__name__)
 
 @dataclass
+class CityStateResults:
+    '''Class to store the results of calling the `/city-state` endpoint.
+
+    Attributes:
+        city (str): City name of the address
+        state (str): 2-character state code of the address
+        ZIPCode (str): 5-digit zip code of the address
+    '''
+    city: str
+    state: str
+    ZIPCode: str
+
+@dataclass
 class UspsApiClient:
     '''Client for interacting with USPS API.
 
@@ -52,18 +65,36 @@ class UspsApiClient:
             logger.error(e)
             raise
 
-    def get_city_state(self, zipcode: str) -> object:
+    def get_city_state(self, zipcode: str) -> CityStateResults:
+        '''Retrieve city and state information for a given zip code.
+
+        Args:
+            zipcode (str): The 5-digit ZIP code to look up
+
+        Returns:
+            CityStateResults: A dataclass containing the city, state, and zip code
+        '''
         if self.access_token is None:
-            print('Missing access token')
+            logger.error('USPS access token string not found in .env file')
             raise
 
         parameters = {'ZIPCode': zipcode}
         headers = {'Authorization': f'Bearer {self.access_token}'}
 
-        response = requests.get(
-            url=f'{self.ADDRESSES_URL}/city-state',
-            params=parameters,
-            headers=headers
-        )
-        response.raise_for_status()
-        return response.json()
+        try:
+            response = requests.get(
+                url=f'{self.ADDRESSES_URL}/city-state',
+                params=parameters,
+                headers=headers
+            )
+            response.raise_for_status()
+            logger.debug(f'Received city/state results for zip code: {zipcode}')
+
+            response = response.json()
+            city_state_data = CityStateResults(**response)
+
+            return city_state_data
+
+        except Exception as e:
+            logger.error(e)
+            raise
