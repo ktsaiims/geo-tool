@@ -1,9 +1,6 @@
-import json
 import logging
 import requests
 from dataclasses import dataclass
-from pathlib import Path
-from src.paths import PATHS
 
 
 logger = logging.getLogger(__name__)
@@ -25,22 +22,6 @@ class UspsApiClient:
     TOKEN_URL = f'{BASE_URL}/oauth2/v3'
     ADDRESSES_URL = f'{BASE_URL}/addresses/v3'
 
-    def save_access_token(self, token_data: str) -> Path:
-        '''Save the USPS access token as a JSON file into the local root directory.
-
-        Args:
-            token_data (str): The access token string in JSON format
-
-        Returns:
-            Path: Access token path
-        '''
-        token_path = PATHS['root'] / 'usps_token.json'
-        with open(token_path, 'w') as f:
-            json.dump(token_data, f, indent=2)
-            logger.info(f'USPS access token saved at: {token_path}')
-
-        return token_path
-
     def get_access_token(self) -> str:
         '''Retrieve an access token from the USPS API using client credentials.
 
@@ -54,7 +35,7 @@ class UspsApiClient:
         }
         headers = {'Content-Type': 'application/x-www-form-urlencoded'}
 
-        logger.info('Requesting USPS access token...')
+        logger.debug('Requesting USPS access token...')
 
         try:
             response = requests.post(
@@ -63,7 +44,7 @@ class UspsApiClient:
                 headers=headers
             )
             response.raise_for_status()
-            logger.info('Received access token')
+            logger.info('Received USPS access token')
 
             return response.json()
 
