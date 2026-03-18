@@ -1,9 +1,10 @@
-from pathlib import Paths
+from pathlib import Path
 
 
-root_dir = Paths(__file__).parent.parent
+root_dir = Path(__file__).parent.parent
 
 PATHS = {
+    'root': root_dir,
     'data': root_dir / 'data',
     'logs': root_dir / 'logs'
 }

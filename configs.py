@@ -1,5 +1,8 @@
-import os
 from datetime import datetime
+from dotenv import load_dotenv
 
-os.environ['TIMESTAMP'] = datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
-os.environ['LOG_LEVEL'] = 'DEBUG'
+
+load_dotenv()
+
+TIMESTAMP = datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+LOG_LEVEL = 'DEBUG'
