@@ -21,7 +21,7 @@ def setup(paths: dict):
     log_path = PATHS['logs'] / f'{TIMESTAMP}.log'
     logger.debug(f'Log level set to: {LOG_LEVEL}')
 
-    handlers = [logging.FileHandler(log_path)]
+    handlers: list[logging.Handler] = [logging.FileHandler(log_path)]
     if LOG_LEVEL == 'DEBUG':
         handlers.append(logging.StreamHandler(sys.stdout)) # print logs to stdout in DEBUG mode
 
