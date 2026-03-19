@@ -6,13 +6,13 @@ from dataclasses import dataclass
 logger = logging.getLogger(__name__)
 
 @dataclass
-class CityStateResults:
+class CityStateResult:
     '''Class to store the results of calling the `/city-state` endpoint.
 
     Attributes:
-        city (str): City name of the address
-        state (str): 2-character state code of the address
-        ZIPCode (str): 5-digit zip code of the address
+        city: City name of the address
+        state: 2-character state code of the address
+        ZIPCode: 5-digit zip code of the address
     '''
     city: str
     state: str
@@ -23,9 +23,9 @@ class UspsApiClient:
     '''Client for interacting with USPS API.
 
     Attributes:
-        client_id (str): USPS-provided client ID
-        client_secret (str): USPS-provided client secret
-        access_token (str): Access token saved in .env
+        client_id: USPS-provided client ID
+        client_secret: USPS-provided client secret
+        access_token: Access token saved in .env
     '''
     client_id: str | None=None
     client_secret: str | None=None
@@ -65,11 +65,11 @@ class UspsApiClient:
             logger.error(e)
             raise
 
-    def get_city_state(self, zipcode: str) -> CityStateResults:
+    def get_city_state(self, zipcode: str) -> CityStateResult:
         '''Retrieve city and state information for a given zip code.
 
         Args:
-            zipcode (str): The 5-digit ZIP code to look up
+            zipcode: The 5-digit ZIP code to look up
 
         Returns:
             CityStateResults: A dataclass containing the city, state, and zip code
@@ -91,7 +91,7 @@ class UspsApiClient:
             logger.debug(f'Received city/state results for zip code: {zipcode}')
 
             response = response.json()
-            city_state_data = CityStateResults(**response)
+            city_state_data = CityStateResult(**response)
 
             return city_state_data
 
