@@ -72,7 +72,7 @@ class UspsApiClient:
             zipcode: The 5-digit ZIP code to look up
 
         Returns:
-            CityStateResults: A dataclass containing the city, state, and zip code
+            CityStateResult: A dataclass containing the city, state, and zip code
         '''
         if self.access_token is None:
             logger.error('USPS access token string not found in .env file')
