@@ -1,6 +1,8 @@
 import json
 import logging
+from api.usps_client import UspsApiClient
 from dotenv import load_dotenv, set_key
+from os import getenv
 from pathlib import Path
 from src.paths import PATHS
 
@@ -42,3 +44,21 @@ def write_access_token_to_env(token_path: Path):
 
     load_dotenv(override=True) # refresh env variables
     logger.info('USPS access token string saved to .env file')
+
+def validate_usps_authentication():
+    '''Validation flow for USPS authentication.'''
+    logger.debug('Validating USPS authentication...')
+
+    if not getenv('USPS_ACCESS_TOKEN'):
+        logger.warning('Missing USPS access token')
+
+        if not getenv('USPS_CLIENT_ID') or not getenv('USPS_CLIENT_SECRET'):
+            logger.error('Cannot retrieve an USPS access token - USPS client ID and/or client secret is missing from .env file')
+            raise
+
+        usps_client = UspsApiClient()
+        token_data = usps_client.get_access_token()
+        access_token_path = save_access_token(token_data)
+        write_access_token_to_env(access_token_path)
+
+    logger.debug('USPS authentication OK')
