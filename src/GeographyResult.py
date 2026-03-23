@@ -13,10 +13,10 @@ class GeographyResult:
 
     '''
     zip_code: str
-    city: str | None
-    state: str | None
-    latitude: float | None
-    longitude: float | None
+    city: str | None=None
+    state: str | None=None
+    latitude: float | None=None
+    longitude: float | None=None
 
     def __post_init__(self):
         '''Validation logic.'''
