@@ -45,8 +45,12 @@ def write_access_token_to_env(token_path: Path):
     load_dotenv(override=True) # refresh env variables
     logger.info('USPS access token string saved to .env file')
 
-def validate_usps_authentication():
-    '''Validation flow for USPS authentication.'''
+def validate_usps_authentication() -> str | None:
+    '''Validation flow for USPS authentication.
+
+    Returns:
+        access_token: USPS access token string
+    '''
     logger.debug('Validating USPS authentication...')
 
     access_token = getenv('USPS_ACCESS_TOKEN')
@@ -64,5 +68,8 @@ def validate_usps_authentication():
         token_data = usps_client.get_access_token()
         access_token_path = save_access_token(token_data)
         write_access_token_to_env(access_token_path)
+        access_token = getenv('USPS_ACCESS_TOKEN')
 
-    logger.debug('USPS authentication OK')
+    logger.debug('USPS access token found')
+
+    return access_token
