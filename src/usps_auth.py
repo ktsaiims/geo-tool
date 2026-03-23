@@ -49,14 +49,18 @@ def validate_usps_authentication():
     '''Validation flow for USPS authentication.'''
     logger.debug('Validating USPS authentication...')
 
-    if not getenv('USPS_ACCESS_TOKEN'):
+    access_token = getenv('USPS_ACCESS_TOKEN')
+    client_id = getenv('USPS_CLIENT_ID')
+    client_secret = getenv('USPS_CLIENT_SECRET')
+
+    if not access_token:
         logger.warning('Missing USPS access token')
 
-        if not getenv('USPS_CLIENT_ID') or not getenv('USPS_CLIENT_SECRET'):
+        if not client_id or not client_secret:
             logger.error('Cannot retrieve an USPS access token - USPS client ID and/or client secret is missing from .env file')
             raise
 
-        usps_client = UspsApiClient()
+        usps_client = UspsApiClient(client_id=client_id, client_secret=client_secret)
         token_data = usps_client.get_access_token()
         access_token_path = save_access_token(token_data)
         write_access_token_to_env(access_token_path)
