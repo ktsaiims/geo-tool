@@ -2,8 +2,8 @@ import logging
 from src.classes.GeographyResult import GeographyResult
 from src.classes.api.google_client import GoogleApiClient
 from src.classes.api.usps_client import UspsApiClient
-from src.google_auth import validate_google_authentication
-from src.usps_auth import validate_usps_authentication
+from src.authentications.google_auth import validate_google_authentication
+from src.authentications.usps_auth import validate_usps_authentication
 
 
 logger = logging.getLogger(__name__)
