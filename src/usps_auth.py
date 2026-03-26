@@ -1,6 +1,6 @@
 import json
 import logging
-from api.usps_client import UspsApiClient
+from src.classes.api.usps_client import UspsApiClient
 from dotenv import load_dotenv, set_key
 from os import getenv
 from pathlib import Path
