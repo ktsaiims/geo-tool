@@ -1,11 +1,11 @@
 import argparse
-import configs
 import logging
-from src.paths import PATHS
-from src.utils import setup
-from src.routes import get_city_state_from_zip, get_coordinates_from_address
+from geography_tool.configs import *
+# from geography_tool.paths import PATHS
+from geography_tool.utils import setup
+from geography_tool.routes import get_city_state_from_zip, get_coordinates_from_address
 
-setup(paths=PATHS)
+setup()
 logger = logging.getLogger(__name__)
 
 def main():

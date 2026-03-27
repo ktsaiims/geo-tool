@@ -1,7 +1,7 @@
 from pathlib import Path
 
 
-root_dir = Path(__file__).parent.parent
+root_dir = Path.cwd()
 
 PATHS = {
     'root': root_dir,

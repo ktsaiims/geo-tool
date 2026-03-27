@@ -15,8 +15,9 @@ def validate_google_authentication() -> str | None:
     google_api_key = getenv('GOOGLE_API_KEY')
 
     if not google_api_key:
-        logger.error('Google API key is missing from .env file')
-        raise
+        err_msg = 'Google API key is missing from .env file'
+        logger.error(err_msg)
+        raise EnvironmentError(err_msg)
 
     logger.debug('Google API key found')
 

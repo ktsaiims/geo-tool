@@ -1,11 +1,11 @@
 import json
 import logging
 import time
-from src.classes.api.usps_client import UspsApiClient
 from dotenv import load_dotenv, set_key
+from geography_tool.classes.api.usps_client import UspsApiClient
+from geography_tool.paths import PATHS
 from os import getenv
 from pathlib import Path
-from src.paths import PATHS
 
 
 logger = logging.getLogger(__name__)
@@ -42,9 +42,10 @@ def write_access_token_to_env(token_path: Path):
         key_to_set='USPS_ACCESS_TOKEN',
         value_to_set=access_token_str
     )
+    logger.debug(f'Access token string written into: {env_path}')
 
-    load_dotenv(override=True) # refresh env variables
-    logger.info('USPS access token string saved to .env file')
+    load_dotenv(dotenv_path=env_path, override=True) # reload .env variables
+    logger.debug('Reloaded .env variables')
 
 def is_token_valid() -> bool:
     '''Check if token exists or has expired.'''
@@ -97,8 +98,9 @@ def validate_usps_authentication() -> str | None:
         logger.warning('Invalid USPS access token')
 
         if not client_id or not client_secret:
-            logger.error('Cannot retrieve an USPS access token - USPS client ID and/or client secret is missing from .env file')
-            raise
+            err_msg = 'Cannot retrieve an USPS access token - USPS client ID and/or client secret is missing from .env file'
+            logger.error(err_msg)
+            raise EnvironmentError(err_msg)
 
         request_access_token(client_id=client_id, client_secret=client_secret)
 
