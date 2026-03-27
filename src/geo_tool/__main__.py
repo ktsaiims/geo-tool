@@ -4,7 +4,7 @@ from geo_tool.configs import *
 from geo_tool.utils import setup
 from geo_tool.routes import get_city_state_from_zip, get_coordinates_from_address
 
-setup()
+
 logger = logging.getLogger(__name__)
 
 def main():
@@ -19,7 +19,15 @@ def main():
     group.add_argument('--coordinates', action='store_true', help='Flag to get coordinates')
     group.required = True
 
+    # Optional args
+    parser.add_argument('--verbose', '-v', action='store_true', help='Flag to output log in DEBUG mode')
+
     args = parser.parse_args()
+
+    if args.verbose:
+        setup(is_verbose=True)
+
+    setup()
     zip_code = args.zipcode
 
     if args.citystate:

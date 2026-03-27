@@ -1,24 +1,31 @@
 import logging
 import sys
+from datetime import datetime
 from dotenv import load_dotenv
 from pathlib import Path
-from geo_tool.configs import LOG_LEVEL, TIMESTAMP
 from geo_tool.paths import PATHS
 
 
 logger = logging.getLogger(__name__)
 
-def setup():
+def setup(is_verbose: bool=False):
     '''Set up directories and logging
 
     Args:
-        paths (dict): Directory paths
+        is_verbose: Flag to trigger logger's DEBUG mode
     '''
+    TIMESTAMP = datetime.now().strftime('%Y-%m-%dT%H-%M-%S')
+
     # Ensure directory paths exist
     for path in PATHS.values():
         Path(path).mkdir(parents=True, exist_ok=True)
 
     # Set up logging
+    if is_verbose:
+        LOG_LEVEL = 'DEBUG'
+    else:
+        LOG_LEVEL = 'INFO'
+
     log_path = PATHS['logs'] / f'{TIMESTAMP}.log'
     logger.debug(f'Log level set to: {LOG_LEVEL}')
 
