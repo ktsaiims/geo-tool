@@ -220,7 +220,8 @@ __marimo__/
 *.egg-info
 
 # Custom
-data/
-logs/
+geo_tool_data/
+geo_tool_logs/
+geo_tool_secrets/
 scratch*
 *token*

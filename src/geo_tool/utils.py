@@ -2,8 +2,8 @@ import logging
 import sys
 from dotenv import load_dotenv
 from pathlib import Path
-from geography_tool.configs import LOG_LEVEL, TIMESTAMP
-from geography_tool.paths import PATHS
+from geo_tool.configs import LOG_LEVEL, TIMESTAMP
+from geo_tool.paths import PATHS
 
 
 logger = logging.getLogger(__name__)
@@ -33,7 +33,7 @@ def setup():
     )
 
     # Load .env
-    load_dotenv(dotenv_path=PATHS['root'] / '.env')
+    load_dotenv(dotenv_path=PATHS['secrets'] / '.env')
 
     logger.debug('Initialized paths, logging, and .env')
     logger.info('Setup complete')

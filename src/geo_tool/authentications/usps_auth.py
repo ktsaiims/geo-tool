@@ -2,8 +2,8 @@ import json
 import logging
 import time
 from dotenv import load_dotenv, set_key
-from geography_tool.classes.api.usps_client import UspsApiClient
-from geography_tool.paths import PATHS
+from geo_tool.classes.api.usps_client import UspsApiClient
+from geo_tool.paths import PATHS
 from os import getenv
 from pathlib import Path
 
@@ -11,15 +11,15 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 def save_access_token(token_data: str) -> Path:
-    '''Save the USPS access token as a JSON file into the local root directory.
+    '''Save the USPS access token as a JSON file.
 
     Args:
-        token_data (str): The access token string in JSON format
+        token_data: The access token string in JSON format
 
     Returns:
         Path: Access token path
     '''
-    token_path = PATHS['root'] / 'usps_token.json'
+    token_path = PATHS['secrets'] / 'usps_token.json'
     with token_path.open('w', encoding='utf-8') as f:
         json.dump(token_data, f, indent=2)
         logger.info(f'USPS access token saved at: {token_path}')
@@ -36,7 +36,7 @@ def write_access_token_to_env(token_path: Path):
         json_data = json.load(f)
 
     access_token_str = json_data['access_token'].strip('"') # remove surrounding double-quotes
-    env_path = PATHS['root'] / '.env'
+    env_path = PATHS['secrets'] / '.env'
     set_key(
         dotenv_path=env_path,
         key_to_set='USPS_ACCESS_TOKEN',
@@ -49,7 +49,7 @@ def write_access_token_to_env(token_path: Path):
 
 def is_token_valid() -> bool:
     '''Check if token exists or has expired.'''
-    json_token = PATHS['root'] / 'usps_token.json'
+    json_token = PATHS['secrets'] / 'usps_token.json'
 
     if not json_token.exists():
         logger.warning(f'Could not find token: {json_token}')

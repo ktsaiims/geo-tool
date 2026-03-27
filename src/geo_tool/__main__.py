@@ -1,9 +1,8 @@
 import argparse
 import logging
-from geography_tool.configs import *
-# from geography_tool.paths import PATHS
-from geography_tool.utils import setup
-from geography_tool.routes import get_city_state_from_zip, get_coordinates_from_address
+from geo_tool.configs import *
+from geo_tool.utils import setup
+from geo_tool.routes import get_city_state_from_zip, get_coordinates_from_address
 
 setup()
 logger = logging.getLogger(__name__)

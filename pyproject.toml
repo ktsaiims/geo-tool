@@ -1,5 +1,5 @@
 [project]
-name = "geography-tool"
+name = "geo-tool"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -10,7 +10,7 @@ dependencies = [
 ]
 
 [project.scripts]
-geo-tool = "geography_tool.__main__:main"
+geo-tool = "geo_tool.__main__:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
