@@ -1,4 +1,4 @@
-# Geography Tool
+# geo-tool
 
 A command-line tool that looks up geographic information for a given ZIP code using the USPS and Google Maps APIs.
 
@@ -16,14 +16,14 @@ A command-line tool that looks up geographic information for a given ZIP code us
 
 ## 1. Install dependencies
 
-Use `uv`:
+Clone the repo onto your machine:
 ```
-uv sync
+git clone https://github.com/ktsaiims/geo-tool.git
 ```
 
-Alternatively, use `pip`:
+Navigate into the cloned directory and run:
 ```
-pip install -r requirements.txt
+uv sync
 ```
 
 ## 2. Configure environment variables
@@ -44,11 +44,23 @@ USPS_ACCESS_TOKEN=your_usps_access_token_here
 
 > **Note:** USPS access tokens are fetched and cached automatically in `./usps_token.json` the first time you run the tool with valid client credentials.
 
+## 3. Install the CLI tool
+
+Use `uv` to [install](https://docs.astral.sh/uv/reference/cli/#uv-tool-install):
+```
+uv tool install .
+```
+
+Or install in [editable mode](https://docs.astral.sh/uv/reference/cli/#uv-tool-install--editable):
+```
+uv tool install -e .
+```
+
 # Usage
 
 ```
-python main.py <zipcode> --citystate
-python main.py <zipcode> --coordinates
+geo-tool <zipcode> --citystate
+geo-tool <zipcode> --coordinates
 ```
 
 The `--citystate` and `--coordinates` flags are mutually exclusive - you must provide exactly one.
@@ -56,35 +68,13 @@ The `--citystate` and `--coordinates` flags are mutually exclusive - you must pr
 ## Examples
 
 ```
-python main.py 90210 --citystate
+geo-tool 90210 --citystate
 # city: BEVERLY HILLS, state: CA
 ```
 
 ```
-python main.py 90210 --coordinates
+geo-tool 90210 --coordinates
 # latitude: 34.0901, longitude: -118.4065
-```
-
-# Project Structure
-
-```
-geography-tool/
-├── main.py                  # Entry point and CLI argument parsing
-├── configs.py               # Logging level and timestamp config
-├── src/
-│   ├── paths.py             # Directory path definitions
-│   ├── routes.py            # Core logic for each CLI command
-│   ├── utils.py             # Logging and directory setup
-│   ├── authentications/
-│   │   ├── google_auth.py   # Validates Google API key from .env
-│   │   └── usps_auth.py     # Fetches and caches USPS access token
-│   └── classes/
-│       ├── GeographyResult.py        # Result dataclass with validation
-│       └── api/
-│           ├── google_client.py      # Google Maps Geocoding API client
-│           └── usps_client.py        # USPS Addresses API client
-├── data/                    # Reserved for data output
-└── logs/                    # Auto-generated log files (one per run)
 ```
 
 # API References
