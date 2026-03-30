@@ -10,7 +10,9 @@ A command-line tool that looks up geographic information for a given ZIP code us
 # Requirements
 
 - Python 3.13+
-- [uv](https://docs.astral.sh/uv/) (recommended)
+- [uv](https://docs.astral.sh/uv/)
+- USPS client ID & client secret
+- Google API key
 
 # Setup
 
@@ -28,7 +30,7 @@ uv sync
 
 ## 2. Configure environment variables
 
-Create a `.env` file in the project root with the following keys:
+Create a `.env` file in the directory `geo_tool_secrets` with the following keys:
 
 ```
 # Google Maps API key (required for --coordinates)
@@ -61,6 +63,7 @@ uv tool install -e .
 ```
 geo-tool <zipcode> --citystate
 geo-tool <zipcode> --coordinates
+geo-tool --help
 ```
 
 The `--citystate` and `--coordinates` flags are mutually exclusive - you must provide exactly one.
@@ -127,17 +130,17 @@ The endpoint returns a JSON response containing:
 
 ```json
 {
-    "access_token": "...",
-    "token_type": "Bearer",
-    "issued_at": 1770832540667,
-    "expires_in": 28799,
-    "status": "approved",
-    "scope": "domestic-prices  oauth2-oidc addresses international-prices openid  usps:MIDs shipments tracking  usps:payment_methods service-standards-files service-standards locations international-service-standard",
-    "issuer": "https://keyc.usps.com/realms/USPS",
-    "client_id": "...",
-    "application_name": "IMS Shipping Prices",
-    "api_products": "[Public Access I]",
-    "public_key": "..."
+  "access_token": "...",
+  "token_type": "Bearer",
+  "issued_at": 1770832540667,
+  "expires_in": 28799,
+  "status": "approved",
+  "scope": "domestic-prices  oauth2-oidc addresses international-prices openid  usps:MIDs shipments tracking  usps:payment_methods service-standards-files service-standards locations international-service-standard",
+  "issuer": "https://keyc.usps.com/realms/USPS",
+  "client_id": "...",
+  "application_name": "IMS Shipping Prices",
+  "api_products": "[Public Access I]",
+  "public_key": "..."
 }
 ```
 
