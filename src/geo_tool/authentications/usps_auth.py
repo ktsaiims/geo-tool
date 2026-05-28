@@ -79,7 +79,8 @@ def request_access_token(client_id: str, client_secret: str):
     token_data = usps_client.get_access_token()
     access_token_path = save_access_token(token_data)
     write_access_token_to_env(access_token_path)
-    getenv('USPS_ACCESS_TOKEN')
+
+    return getenv('USPS_ACCESS_TOKEN')
 
 def validate_usps_authentication() -> str | None:
     '''Validation flow for USPS authentication.
@@ -102,7 +103,7 @@ def validate_usps_authentication() -> str | None:
             logger.error(err_msg)
             raise EnvironmentError(err_msg)
 
-        request_access_token(client_id=client_id, client_secret=client_secret)
+        access_token = request_access_token(client_id=client_id, client_secret=client_secret)
 
     logger.debug('USPS access token found')
 
